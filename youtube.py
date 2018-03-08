@@ -15,7 +15,6 @@ import lxml
 import requests
 import re
 
-## hihihihihih
 
 # Getting Info from Channel
 def get_channel_info(target_url):
