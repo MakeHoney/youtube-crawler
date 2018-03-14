@@ -42,7 +42,7 @@ from datetime import datetime
 # Getting Info from Channel
 def get_channel_info(target_url):
     # Connect to Channel URL
-    response = requests.get(target_url + '/video')
+    response = requests.get(target_url + '/videos')
     soup = BeautifulSoup(response.text, "lxml")
     channel_videos = []
 
@@ -59,7 +59,7 @@ def get_channel_info(target_url):
     # Get channel_category, channel_view_count, channel_sign_date, channel_crawl_date
     crawl_date = str(datetime.now().year) + '-' + str(datetime.now().month) + '-' + str(datetime.now().day)
 
-    ''' # Will Join API to find all videos' info
+    # Will Join API to find all videos' info
     # Get Channel's video list on tab 'video'
     lis = soup.find_all('li', {'class': 'channels-content-item yt-shelf-grid-item'})
     for li in lis:
@@ -81,7 +81,7 @@ def get_channel_info(target_url):
         }
         # Append to videos list
         channel_videos.append(video_info)
-    '''
+
 
     # Get channel_view_count, sign_date
     response = requests.get(target_url + '/about')
@@ -132,6 +132,20 @@ def get_video_info(target_url):
     return video_category, video_like_count, video_dislike_count
 
 
+def print_channel(channel):
+    print('-' * 25 + 'channel_info' + '-' * 25)
+    print({'channel_name': channel['channel_name'],
+           'channel_url': channel['channel_url'],
+           'channel_follower_count': channel['channel_follower_count'],
+           'channel_view_count': channel['channel_view_count'],
+           'channel_sign_date': channel['channel_sign_date'],
+           'channel_crawl_date': channel['channel_crawl_date']
+           })
+    print('-' * 26 + 'video_info' + '-' * 26)
+    for video in channel['channel_videos']:
+        print(video)
+
+
 # Total Channel Info List
 channel_list = []
 # Total Channel's URL List
@@ -149,4 +163,5 @@ for url in url_list:
 
     channel_list.append(channel_info)
 
-print(channel_list)
+for channel in channel_list:
+    print_channel(channel)
