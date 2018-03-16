@@ -5,13 +5,12 @@
 // basic code
 
 var async = require('async');
-var asyncLoop = require('node-async-loop');
 var request = require('request');
 var fs = require('fs');
 var date = require('date-utils');
 
 var channel_list = ['UCFM_07Mxv6CglREk8qdkPaw', 'UCUXYT0CqvBx1ZysmxSW7EDQ', 'UCu9BCtGIEr73LXZsKmoujKw'];
-var api_key = 'AIzaSyCZyVxgyR6x6AFDd3BOjoIr0H-vyWrGygo';
+var api_key = 'Enter your API key';
 var base_url = 'https://www.googleapis.com/youtube/v3/search?part=id,snippet&order=date&maxResults=50';
 
 function doRequest(url){

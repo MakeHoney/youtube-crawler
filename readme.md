@@ -1,4 +1,33 @@
-# Youtube Crawler
+# Youtube Crawler - youtube_videolist_node.js
+* Youtube VideoList Crawler by each channel with Node.js, Youtube-API Data v3
+* Will keep optimizing(This is a very RAW version)
+
+# How to Use
+1. Install Node.js
+* Find how to install node.js
+2. Install follow libraries
+```bash
+$ npm install async
+$ npm install request
+$ npm install fs
+$ npm install date
+```
+3. Get API key for Youtube-API Data v3
+4. Enter your API key into code
+```javascript
+var api_key = 'Enter your API Key';
+```
+5. Enter your channel's channel id into code
+```javascript
+var channel_list = ['channel1_id', 'channel2_id'];
+```
+6. Just run it!
+```bash
+$ node youtube_videolist_node
+```
+
+
+# Youtube Crawler - youtube_fulldata_python.py
 * Youtube Crawler with Python3, BeautifulSoup4
 
 # How to Use
