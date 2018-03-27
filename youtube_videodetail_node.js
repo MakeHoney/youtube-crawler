@@ -18,28 +18,32 @@ module.exports = function(api_key) {
       var file = fs.createWriteStream(file_name);
       async function main(url, file) {
         async function search_video(url) {
-          var body = await request({url: url, json: true})
+          var body = await request({
+              url: url,
+              json: true
+            })
             .then(function(response) {
-              if(response)
+              if (response)
                 return response;
             })
             .catch(function(err) {
               console.log('VideoDetail Error');
-              console.log(err);
               return undefined;
             });
-          if (body !== 0 || body !== undefined) {
-            await file.write('{\nvideo_id: ' + videoId + ',\n');
-            await file.write('video_name: ' + body.items[0].snippet.title + ',\n');
-            await file.write('video_url: ' + 'http://youtube.com/watch?v=' + videoId + ',\n'); // get url
-            await file.write('video_thumbnails: ' + body.items[0].snippet.thumbnails.default.url + ',\n'); // can choose default(88), medium(240), high(800)
-            await file.write('video_category: ' + body.items[0].snippet.categoryId + ',\n');
-            await file.write('video_viewCount: ' + body.items[0].statistics.viewCount + ',\n');
-            await file.write('video_likeCount: ' + body.items[0].statistics.likeCount + ',\n');
-            await file.write('video_dislikeCount: ' + body.items[0].statistics.dislikeCount + ',\n');
-            await file.write('video_commentCount: ' + body.items[0].statistics.commentCount + ',\n');
-            await file.write('video_publishedAt: ' + body.items[0].snippet.publishedAt + ',\n');
-            await file.write('video_crawledAt: ' + time + '\n}');
+          if (body !== undefined) {
+            if (body.items !== undefined) {
+              await file.write('{\nvideo_id: ' + videoId + ',\n');
+              await file.write('video_name: ' + body.items[0].snippet.title + ',\n');
+              await file.write('video_url: ' + 'http://youtube.com/watch?v=' + videoId + ',\n'); // get url
+              await file.write('video_thumbnails: ' + body.items[0].snippet.thumbnails.default.url + ',\n'); // can choose default(88), medium(240), high(800)
+              await file.write('video_category: ' + body.items[0].snippet.categoryId + ',\n');
+              await file.write('video_viewCount: ' + body.items[0].statistics.viewCount + ',\n');
+              await file.write('video_likeCount: ' + body.items[0].statistics.likeCount + ',\n');
+              await file.write('video_dislikeCount: ' + body.items[0].statistics.dislikeCount + ',\n');
+              await file.write('video_commentCount: ' + body.items[0].statistics.commentCount + ',\n');
+              await file.write('video_publishedAt: ' + body.items[0].snippet.publishedAt + ',\n');
+              await file.write('video_crawledAt: ' + time + '\n}');
+            }
           }
           return 'done';
         }

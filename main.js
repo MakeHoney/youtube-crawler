@@ -10,13 +10,19 @@ var count = 0;
 for(var channel of r_cl){
   channel_list.push(channel.substring(31));
   count += 1;
-  if(count >= 2)
+  if(count >= 20)
     break;
 }
-var api_key = 'AIzaSyCZyVxgyR6x6AFDd3BOjoIr0H-vyWrGygo';
+//var api_key = 'AIzaSyCZyVxgyR6x6AFDd3BOjoIr0H-vyWrGygo';
+var api_key = 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE';
 
-var my_channel_detail = channel_detail_node(api_key, channel_list);
-var my_video_list = video_list_node(api_key, channel_list);
-
-console.log('channel_detail: ' + my_channel_detail.channelDetail() + '\n');
-console.log('video_list: ' + my_video_list.videoList() + '\n');
+for(const channel of channel_list){
+  var my_channel_detail = channel_detail_node(api_key, channel);
+  var my_video_list = video_list_node(api_key, channel);
+  var r = my_channel_detail.channelDetail();
+  console.log('channel_detail: ' + r + '\n');
+  if(r === 'none')
+    console.log('this is none');
+  else
+    console.log('video_list: ' + my_video_list.videoList() + '\n');
+}
