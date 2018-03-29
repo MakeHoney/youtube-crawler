@@ -8,7 +8,7 @@
 2. Install follow libraries
 ```bash
 $ npm install async
-$ npm install request
+$ npm install request-promise
 $ npm install fs
 $ npm install date
 ```
@@ -37,7 +37,7 @@ $ node youtube_channeldetail_node
 2. Install follow libraries
 ```bash
 $ npm install async
-$ npm install request
+$ npm install request-promise
 $ npm install fs
 $ npm install date
 ```
@@ -66,7 +66,7 @@ $ node youtube_videolist_node
 2. Install follow libraries
 ```bash
 $ npm install async
-$ npm install request
+$ npm install request-promise
 $ npm install fs
 $ npm install date
 ```
