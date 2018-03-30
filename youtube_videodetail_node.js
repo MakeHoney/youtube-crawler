@@ -44,8 +44,11 @@ module.exports = function(api_key) {
               await file.write('video_publishedAt: ' + body.items[0].snippet.publishedAt + ',\n');
               await file.write('video_crawledAt: ' + time + '\n}');
             }
+            return 'done';
           }
-          return 'done';
+          else{
+            return 'none';
+          }
         }
         var r = await search_video(url);
       }
