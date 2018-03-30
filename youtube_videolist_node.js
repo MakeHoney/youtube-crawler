@@ -59,6 +59,8 @@ module.exports = {
               if (item !== undefined) {
                 if (item.id.videoId !== undefined) {
                   await file.write(item.id.videoId + '\n');
+
+                  // ADD YOUR MODULE based on videolists
                   let videoDetail = await video_detail_node(api_key);
                   await console.log('videoId: ' + item.id.videoId + ' ' + videoDetail.videoDetail(dir_name, item.id.videoId));
                 }
