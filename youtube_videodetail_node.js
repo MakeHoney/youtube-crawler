@@ -7,6 +7,19 @@ var date = require('date-utils');
 
 var base_url = 'https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics';
 
+async function saveData(file, videoId, videoTitle, videoUrl, videoThumbnails, videoCategory, videoViewCount, videoLikeCount, videoDislikeCount, videoCommentCount, videoPublishedAt, videoCrawledAt){
+  await file.write('{\nvideo_id: ' + videoId + ',\n');
+  await file.write('video_name: ' + videoTitle + ',\n');
+  await file.write('video_url: ' + videoUrl + ',\n'); // get url
+  await file.write('video_thumbnails: ' + videoThumbnails + ',\n'); // can choose default(88), medium(240), high(800)
+  await file.write('video_category: ' + videoCategory + ',\n');
+  await file.write('video_viewCount: ' + videoViewCount + ',\n');
+  await file.write('video_likeCount: ' + videoLikeCount + ',\n');
+  await file.write('video_dislikeCount: ' + videoDislikeCount + ',\n');
+  await file.write('video_commentCount: ' + videoCommentCount + ',\n');
+  await file.write('video_publishedAt: ' + videoPublishedAt + ',\n');
+  await file.write('video_crawledAt: ' + videoCrawledAt + '\n}');
+}
 // Will Modify file.write codes to JSON style maker
 module.exports = function(api_key) {
   return {
@@ -32,17 +45,20 @@ module.exports = function(api_key) {
             });
           if (body !== undefined) {
             if (body.items !== undefined) {
-              await file.write('{\nvideo_id: ' + videoId + ',\n');
-              await file.write('video_name: ' + body.items[0].snippet.title + ',\n');
-              await file.write('video_url: ' + 'http://youtube.com/watch?v=' + videoId + ',\n'); // get url
-              await file.write('video_thumbnails: ' + body.items[0].snippet.thumbnails.default.url + ',\n'); // can choose default(88), medium(240), high(800)
-              await file.write('video_category: ' + body.items[0].snippet.categoryId + ',\n');
-              await file.write('video_viewCount: ' + body.items[0].statistics.viewCount + ',\n');
-              await file.write('video_likeCount: ' + body.items[0].statistics.likeCount + ',\n');
-              await file.write('video_dislikeCount: ' + body.items[0].statistics.dislikeCount + ',\n');
-              await file.write('video_commentCount: ' + body.items[0].statistics.commentCount + ',\n');
-              await file.write('video_publishedAt: ' + body.items[0].snippet.publishedAt + ',\n');
-              await file.write('video_crawledAt: ' + time + '\n}');
+              await saveData(
+                file,
+                videoId,
+                body.items[0].snippet.title,
+                'http://youtube.com/watch?v=' + videoId,
+                body.items[0].snippet.thumbnails.high.url,
+                body.items[0].snippet.categoryId,
+                body.items[0].statistics.viewCount,
+                body.items[0].statistics.likeCount,
+                body.items[0].statistics.dislikeCount,
+                body.items[0].statistics.commentCount,
+                body.items[0].snippet.publishedAt,
+                time
+              );
             }
             return 'done';
           }

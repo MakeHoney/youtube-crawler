@@ -39,7 +39,7 @@ module.exports = {
           deferred.reject(Error('MKDIR failed'));
         }
       });
-      var file = await fs.createWriteStream(file_name);
+      //var file = await fs.createWriteStream(file_name);
       async function search_for_500() {
         for (const page of pageList) {
           var body = await request({
@@ -58,9 +58,10 @@ module.exports = {
               var item = body.items[j];
               if (item !== undefined) {
                 if (item.id.videoId !== undefined) {
-                  await file.write(item.id.videoId + '\n');
+                  //await file.write(item.id.videoId + '\n');
 
                   // ADD YOUR MODULE based on videolists
+                  
                   let videoDetail = await video_detail_node(api_key);
                   await console.log('videoId: ' + item.id.videoId + ' ' + videoDetail.videoDetail(dir_name, item.id.videoId));
                 }

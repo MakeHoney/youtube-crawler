@@ -8,6 +8,18 @@ var Q = require('q');
 
 var base_url = 'https://www.googleapis.com/youtube/v3/channels?part=id,snippet,statistics';
 
+async function saveData(file, channelId, channelTitle, channelUrl, channelThumbnails, channelViewCount, channelSubscriberCount, channelVideoCount, channelPublishedAt, channelCrawledAt){
+  await file.write('{\nchannel_id: ' + channelId + ',\n');
+  await file.write('channel_name: ' + channelTitle + ',\n');
+  await file.write('channel_url: ' + channelUrl + ',\n'); // get url
+  await file.write('channel_thumbnails: ' + channelThumbnails + ',\n'); // can choose default(88), medium(240), high(800)
+  await file.write('channel_viewCount: ' + channelViewCount + ',\n');
+  await file.write('channel_subscriberCount: ' + channelSubscriberCount + ',\n');
+  await file.write('channel_videoCount: ' + channelVideoCount + ',\n');
+  await file.write('channel_publishedAt: ' + channelPublishedAt + ',\n');
+  await file.write('channel_crawledAt: ' + channelCrawledAt + '\n}');
+}
+
 module.exports = {
   channelDetailAsync: function(api_key, channel, callback){
     var deferred = Q.defer();
@@ -33,15 +45,18 @@ module.exports = {
       if(body !== undefined){
         if (body.items[0].statistics.videoCount !== "0" && body.items[0].statistics.videoCount !== 0) {
           var file = await fs.createWriteStream(file_name);
-          await file.write('{\nchannel_id: ' + channel + ',\n');
-          await file.write('channel_name: ' + body.items[0].snippet.title + ',\n');
-          await file.write('channel_url: ' + 'http://www.youtube.com/channel/' + channel + ',\n'); // get url
-          await file.write('channel_thumbnails: ' + body.items[0].snippet.thumbnails.default.url + ',\n'); // can choose default(88), medium(240), high(800)
-          await file.write('channel_viewCount: ' + body.items[0].statistics.viewCount + ',\n');
-          await file.write('channel_subscriberCount: ' + body.items[0].statistics.subscriberCount + ',\n');
-          await file.write('channel_videoCount: ' + body.items[0].statistics.videoCount + ',\n');
-          await file.write('channel_publishedAt: ' + body.items[0].snippet.publishedAt + ',\n');
-          await file.write('channel_crawledAt: ' + time + '\n}');
+          await saveData(
+            file,
+            channel,
+            body.items[0].snippet.title,
+            'http://www.youtube.com/channel/' + channel,
+            body.items[0].snippet.thumbnails.high.url,
+            body.items[0].statistics.viewCount,
+            body.items[0].statistics.subscriberCount,
+            body.items[0].statistics.videoCount,
+            body.items[0].snippet.publishedAt,
+            time
+          );
           deferred.resolve(body.items[0].statistics.videoCount);
         }
         else{
