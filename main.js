@@ -1,15 +1,14 @@
-var async = require('async');
-var fs = require('fs');
-
-var channelDetail = require('./youtube_channeldetail_node.js');
-var videoList = require('./youtube_videolist_node.js');
+const async = require('async'),
+  fs = require('fs'),
+  channelDetail = require('./lib/youtube_channeldetail_node.js'),
+  videoList = require('./lib/youtube_videolist_node.js')
 var channel_temp = [];
 var channel_list = [];
 //var api_key = 'AIzaSyCZyVxgyR6x6AFDd3BOjoIr0H-vyWrGygo';
-var api_key = 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE';
+var api_key = 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE'
 
 // LOAD channel_list from csv or etc
-channel_temp = fs.readFileSync('./result2.csv', 'utf8').split(/\r?\n/);
+channel_temp = fs.readFileSync('./result2.csv', 'utf8').split(/\r?\n/)
 var count = 0;
 for(var channel of channel_temp){
   channel_list.push(channel.substring(31));
@@ -30,9 +29,9 @@ async function main(api_key, channel){
           console.log(error);
         else
           console.log(result);
-      });
+      })
     }
-  });
+  })
 }
 
 var tasks = {};

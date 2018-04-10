@@ -36,10 +36,7 @@ $ node youtube_channeldetail_node
 * Find how to install node.js
 2. Install follow libraries
 ```bash
-$ npm install async
-$ npm install request-promise
-$ npm install fs
-$ npm install date
+$ npm install
 ```
 3. Get API key for Youtube-API Data v3
 4. Enter your API key into code
