@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/TaeBbong/youtube_crawler#readme",
   "dependencies": {
+    "async-retry": "^1.2.1",
     "config": "^1.30.0",
     "request": "^2.85.0",
     "request-promise": "^4.2.2"

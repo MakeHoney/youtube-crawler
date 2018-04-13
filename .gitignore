@@ -133,6 +133,7 @@ config/*
 # results
 result.csv
 result2.csv
+*.txt
 
 # example codes
 youtube_fulldata_python.py
