@@ -135,5 +135,8 @@ result.csv
 result2.csv
 *.txt
 
+# else
+*.py
+
 # example codes
 youtube_fulldata_python.py
