@@ -21,8 +21,12 @@ const main = async (channel) => {
     if(videoCount === Error) throw new Error('invalid channel')
     else if(videoCount === '0' || videoCount === 0) return 0
     else console.log('Channel Detail ' + channel + ' done')
-    await videoList(channel, videoCount, videoDetail)
+    let { dir_name, video_list } = await videoList(channel, videoCount)
     console.log('Video List ' + channel + ' done')
+    for(const videoId of video_list){
+      let r = videoDetail(dir_name, videoId)
+    }
+    //await videoDetail(dir_name, video_list)
   } catch (error){
     console.log(error)
   }
