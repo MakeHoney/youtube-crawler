@@ -1,6 +1,6 @@
 module.exports = {
   channelDetail: {
-    api_key: '',
+    apiKey: '',
     retryOpt: {
       retries: 5,
       minTimeout: 1000,
@@ -26,7 +26,7 @@ module.exports = {
     },
   },
   videoList: {
-    api_key: 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE',
+    apiKey: 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE',
     base_url: 'https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&order=date&maxResults=50',
     retryOpt: {
       retries: 5,
@@ -39,7 +39,7 @@ module.exports = {
     },
   },
   videoDetail: {
-    api_key: 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE',
+    apiKey: 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE',
     base_url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics',
     retryOpt: {
       retries: 5,

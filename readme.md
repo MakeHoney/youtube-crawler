@@ -12,7 +12,7 @@ $ npm install
 3. Get API key for Youtube-API Data v3
 4. Enter your API key into config
 ```json
-api_key: 'Enter your API Key';
+apiKey: 'Enter your API Key';
 ```
 5. Just run it!
 ```bash
