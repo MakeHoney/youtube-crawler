@@ -1,8 +1,6 @@
-// api_key = AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE
-// api_key = AIzaSyCZyVxgyR6x6AFDd3BOjoIr0H-vyWrGygo
 module.exports = {
   channelDetail: {
-    api_key: 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE',
+    api_key: '',
     base_url: 'https://www.googleapis.com/youtube/v3/channels?part=id,snippet,statistics',
     retryOpt: {
       retries: 5,
