@@ -1,11 +1,17 @@
+// api_key = AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE
+// api_key = AIzaSyCZyVxgyR6x6AFDd3BOjoIr0H-vyWrGygo
 module.exports = {
   channelDetail: {
-    api_key: 'AIzaSyCZyVxgyR6x6AFDd3BOjoIr0H-vyWrGygo',
+    api_key: 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE',
     base_url: 'https://www.googleapis.com/youtube/v3/channels?part=id,snippet,statistics',
     retryOpt: {
       retries: 5,
       minTimeout: 1000,
       maxTimeout: 15000,
+    },
+    requestOpt: {
+      url: '',
+      json: true,
     },
     saveData: async function saveData(file, channelId, channelTitle, channelUrl, channelThumbnails, channelViewCount, channelSubscriberCount, channelVideoCount, channelPublishedAt, channelCrawledAt){
       await file.write('{\nchannel_id: ' + channelId + ',\n')
@@ -20,21 +26,29 @@ module.exports = {
     },
   },
   videoList: {
-    api_key: 'AIzaSyCZyVxgyR6x6AFDd3BOjoIr0H-vyWrGygo',
+    api_key: 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE',
     base_url: 'https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&order=date&maxResults=50',
     retryOpt: {
       retries: 5,
       minTimeout: 1000,
       maxTimeout: 15000,
     },
+    requestOpt: {
+      url: '',
+      json: true,
+    },
   },
   videoDetail: {
-    api_key: 'AIzaSyCZyVxgyR6x6AFDd3BOjoIr0H-vyWrGygo',
+    api_key: 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE',
     base_url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics',
     retryOpt: {
       retries: 5,
       minTimeout: 1000,
       maxTimeout: 15000,
+    },
+    requestOpt: {
+      url: '',
+      json: true,
     },
     saveData: async function saveData(file, videoId, videoTitle, videoUrl, videoThumbnails, videoCategory, videoViewCount, videoLikeCount, videoDislikeCount, videoCommentCount, videoPublishedAt, videoCrawledAt){
       await file.write('{\nvideo_id: ' + videoId + ',\n')
