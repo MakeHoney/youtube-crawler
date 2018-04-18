@@ -61,5 +61,5 @@ module.exports = {
       await file.write('video_publishedAt: ' + videoPublishedAt + ',\n')
       await file.write('video_crawledAt: ' + videoCrawledAt + '\n}')
     },
-  }
+  },
 }
