@@ -1,14 +1,16 @@
 module.exports = {
   channelDetail: {
     api_key: '',
-    base_url: 'https://www.googleapis.com/youtube/v3/channels?part=id,snippet,statistics',
     retryOpt: {
       retries: 5,
       minTimeout: 1000,
       maxTimeout: 15000,
     },
     requestOpt: {
-      url: '',
+      url: 'https://www.googleapis.com/youtube/v3/channels',
+      qs: {
+        part: 'id,snippet,statistics',
+      },
       json: true,
     },
     saveData: async function saveData(file, channelId, channelTitle, channelUrl, channelThumbnails, channelViewCount, channelSubscriberCount, channelVideoCount, channelPublishedAt, channelCrawledAt){
