@@ -1,5 +1,5 @@
 {
-  "name": "youtube-details-crawler",
+  "name": "youtube-crawler",
   "version": "0.0.1",
   "description": "* Youtube Channel Detail Crawler by each channel with Node.js, Youtube-API Data v3 * Will keep optimizing & Codes more readable",
   "main": "index.js",
