@@ -17,17 +17,15 @@ for(var channel of channelRaw){
 console.log(channelList.length)
 
 /* fetch jobs on main */
-const main = async (channel) => {
+const main = async (channelList) => {
   /* run queue & save data */
-  const tasks = {}
 
   for(const channel of channelList){
-
     try {
       console.log('this is ' + channel)
       let videoCount = await channelDetail(channel)
 
-      if(videoCount === '0' || videoCount === 0) return 0
+      if(videoCount === '0' || videoCount === 0) continue
       else console.log('Channel Detail ' + channel + ' done')
 
       let { dirName, videos } = await videoList(channel, videoCount)
@@ -42,4 +40,4 @@ const main = async (channel) => {
   }
 }
 
-main()
+main(channelList)
