@@ -1,6 +1,5 @@
 module.exports = {
   channelDetail: {
-    apiKey: '',
     retryOpt: {
       retries: 5,
       minTimeout: 1000,
@@ -26,28 +25,27 @@ module.exports = {
     },
   },
   videoList: {
-    apiKey: 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE',
-    base_url: 'https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&order=date&maxResults=50',
+    baseUrl: 'https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&order=date&maxResults=50',
     retryOpt: {
       retries: 5,
       minTimeout: 1000,
       maxTimeout: 15000,
     },
     requestOpt: {
-      url: '',
       json: true,
     },
   },
   videoDetail: {
-    apiKey: 'AIzaSyD4OiN3CC8FtDujdkyDsOCBQJdrOTyoeDE',
-    base_url: 'https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics',
     retryOpt: {
       retries: 5,
       minTimeout: 1000,
       maxTimeout: 15000,
     },
     requestOpt: {
-      url: '',
+      url: 'https://www.googleapis.com/youtube/v3/videos',
+      qs: {
+        part: 'id, snippet, statistics',
+      },
       json: true,
     },
     saveData: async function saveData(file, videoId, videoTitle, videoUrl, videoThumbnails, videoCategory, videoViewCount, videoLikeCount, videoDislikeCount, videoCommentCount, videoPublishedAt, videoCrawledAt){

@@ -130,6 +130,10 @@ typings/
 config/*
 !config/default.js
 
+# inputs
+filtered.csv
+development.json
+
 # results
 result.csv
 result2.csv
