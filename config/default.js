@@ -26,14 +26,20 @@ module.exports = {
     },
   },
   videoList: {
-    baseUrl: 'https://www.googleapis.com/youtube/v3/search?part=id,snippet&type=video&order=date&maxResults=50',
     retryOpt: {
       retries: 5,
       minTimeout: 1000,
       maxTimeout: 15000,
     },
     requestOpt: {
+      url: 'https://www.googleapis.com/youtube/v3/search',
       json: true,
+      qs: {
+        part: 'id,snippet',
+        type: 'video',
+        order: 'date',
+        maxResults: 50,
+      },
     },
   },
   videoDetail: {
