@@ -1,4 +1,5 @@
 module.exports = {
+  apiKey: '',
   channelDetail: {
     retryOpt: {
       retries: 5,
