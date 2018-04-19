@@ -10,11 +10,9 @@ var channelRaw = fs.readFileSync('./filtered.csv', 'utf8').split(/\r?\n/)
 var channelList = []
 for(var channel of channelRaw){
   channelList.push(channel.substring(31))
-  if(channelList.length >= 1000) // option(have to erase on product)
+  if(channelList.length >= 10) // option(have to erase on product)
      break
 }
-
-console.log(channelList.length)
 
 /* fetch jobs on main */
 const main = async (channelList) => {
