@@ -138,6 +138,7 @@ development.json
 result.csv
 result2.csv
 *.txt
+*.csv
 
 # else
 *.py
