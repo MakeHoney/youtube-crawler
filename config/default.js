@@ -13,6 +13,25 @@ module.exports = {
       },
       json: true,
     },
+    saveMeta: async function saveMeta(channelId, channelTitle, channelDesc, channelUrl, channelThumbnails, channelPublishedAt){
+      var client = require('../lib/connection.js')
+
+      await client.index({
+        index: 'channels',
+        type: '_doc',
+        id: channelId,
+        body: {
+          "name": channelTitle,
+          "detail": channelDesc,
+          "url": channelUrl,
+          "thumbnails": channelThumbnails,
+          "publishedAt": channelPublishedAt,
+          "isActive": true
+        }
+      }, function(err, resp, status){
+        console.log(resp)
+      });
+    },
     saveData: async function saveData(file, channelId, channelTitle, channelUrl, channelThumbnails, channelViewCount, channelSubscriberCount, channelVideoCount, channelPublishedAt, channelCrawledAt){
       await file.write('{\nchannel_id: ' + channelId + ',\n')
       await file.write('channel_name: ' + channelTitle + ',\n')
