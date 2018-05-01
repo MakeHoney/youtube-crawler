@@ -8,6 +8,10 @@ const config = require('config'),
   VideoDetail = require('./lib/video-detail.js'),
   videoDetail = new VideoDetail(config.videoDetail),
   promisify = require('util').promisify,
+  cluster = require('cluster'),
+  Pqueue = require('p-queue'),
+  pqueue = new Pqueue({ concurrency: config.m }),
+  numCPUs = require('os').cpus().length,
   mkdirp = promisify(require('mkdirp'))
 
 // add toFormat function on Date
@@ -19,6 +23,8 @@ let channelRaw = fs.readFileSync('./filtered.csv', 'utf8').split(/\r?\n/),
 
 for(let channel of channelRaw) {
   channelList.push(channel.substring(31))
+  // if(channelList.length >= 10) // option(have to erase on product)
+  //   break
 }
 
 // development env wirter setting
@@ -58,21 +64,20 @@ const main = async (channelList) => {
   for(const channel of channelList){
     try {
       console.log('this is ' + channel)
-
       const time = (new Date()).toFormat('YYYY-MM-DDTHH24-MI-SS.000Z')
-      let videoCount = await channelDetail.collect(channel, time)
-
-      // check running channel
-      if(videoCount === '0' || videoCount === 0) continue
-      let { dirName, videos } = await videoList.collect(channel, videoCount)
-
-      for(const videoId of videos){
-        await videoDetail.collect(dirName, videoId)
-      }
+      //let videoCount = await channelDetail.collect(channel, time)
+      pqueue.add(() => channelDetail.collect(channel, time)).then(function(videoCount){
+        if(videoCount === '0' || videoCount === 0) throw new Error('Empty Channel')
+        pqueue.add(() => videoList.collect(channel, videoCount)).then(function({ dirName, videos }){
+          console.log(channel + ' videoList done')
+          for(const videoId of videos){
+            pqueue.add(() => videoDetail.collect(dirName, videoId)).then(console.log.bind(null, videoId + ' videoDetail done'))
+          }
+        })
+      })
     } catch (error){
-      console.log(`error on channel: ${channel}\nmaybe invalid channel?\nerror: ${error}`)
+        console.log(`error on channel: ${channel}\nmaybe invalid channel?\nerror: ${error}`)
     }
   }
 }
-
 main(channelList)
