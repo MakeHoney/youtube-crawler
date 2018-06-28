@@ -28,7 +28,7 @@ module.exports = {
         part: 'id,snippet',
         type: 'video',
         order: 'date',
-        maxResults: 50,
+        maxResults: 10,
       },
     },
   },
