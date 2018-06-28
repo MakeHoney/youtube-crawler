@@ -17,23 +17,11 @@ const config = require('config'),
 // add toFormat function on Date
 require('date-utils')
 
-/* load channel-list from csv */
-let channelRaw = fs.readFileSync('./filtered.csv', 'utf8').split(/\r?\n/),
-  channelList = []
-
-for(let channel of channelRaw) {
-  channelList.push(channel.substring(31))
-  // if(channelList.length >= 10) // option(have to erase on product)
-  //   break
-}
+/* load channelID from input */
+let channel = 'UCxx7UvIhPkEQxaplaWS2hLg'
 
 // development env wirter setting
 if(!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-  for(let channel of channelRaw) {
-    channelList.push(channel.substring(31))
-    if(channelList.length >= 10) // option(have to erase on product)
-      break
-  }
 
   channelDetail.setWriter(async (result, channel, time) => {
     const fileName = `${config.rawDir}/channel-detail/${result.id}-${time}-channel-detail.txt`
@@ -59,25 +47,24 @@ if(!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 }
 
 /* fetch jobs on main */
-const main = async (channelList) => {
+const main = async (channel) => {
   /* run queue & save data */
-  for(const channel of channelList){
-    try {
-      console.log('this is ' + channel)
-      const time = (new Date()).toFormat('YYYY-MM-DDTHH24-MI-SS.000Z')
-      //let videoCount = await channelDetail.collect(channel, time)
-      pqueue.add(() => channelDetail.collect(channel, time)).then(function(videoCount){
-        if(videoCount === '0' || videoCount === 0) throw new Error('Empty Channel')
+  try {
+    console.log('this is ' + channel)
+    const time = (new Date()).toFormat('YYYY-MM-DDTHH24-MI-SS.000Z')
+    let videoCount = await channelDetail.collect(channel, time)
+    pqueue.add(() => channelDetail.collect(channel, time)).then(function(videoCount){
+      if(videoCount === '0' || videoCount === 0) throw new Error('Empty Channel')
         pqueue.add(() => videoList.collect(channel, videoCount)).then(function({ dirName, videos }){
           console.log(channel + ' videoList done')
           for(const videoId of videos){
             pqueue.add(() => videoDetail.collect(dirName, videoId)).then(console.log.bind(null, videoId + ' videoDetail done'))
           }
         })
-      })
-    } catch (error){
-        console.log(`error on channel: ${channel}\nmaybe invalid channel?\nerror: ${error}`)
-    }
+    })
+  } catch (error){
+      console.log(`error on channel: ${channel}\nmaybe invalid channel?\nerror: ${error}`)
   }
 }
-main(channelList)
+
+main(channel)
