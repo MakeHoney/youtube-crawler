@@ -24,7 +24,7 @@ let channel = 'UCxx7UvIhPkEQxaplaWS2hLg'
 if(!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 
   channelDetail.setWriter(async (result, channel, time) => {
-    const fileName = `${config.rawDir}/channel-detail/${result.id}-${time}-channel-detail.txt`
+    const fileName = `${config.rawDir}/channel-detail/${channel}-${time}-channel-detail.txt`
     const file = fs.createWriteStream(fileName)
 
     file.write(JSON.stringify(result, null, '\t'))
