@@ -67,7 +67,6 @@ const main = async (channel) => {
       if(videoCount === '0' || videoCount === 0) throw new Error('Empty Channel')
         pqueue.add(() => videoList.collect(channel, videoCount)).then(function({ dirName, videos }){
           console.log(channel + ' videoList done')
-          console.log(videos)
           for(const videoId of videos){
             pqueue.add(() => videoDetail.collect(dirName, videoId)).then(function(result){
               console.log(videoId + ' videoDetail done')
