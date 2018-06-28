@@ -80,4 +80,8 @@ const main = async (channel) => {
   }
 }
 
-main(channel)
+/* when we export index.js */
+module.exports = main
+
+/* When we don't export index.js */
+// main(channel)
