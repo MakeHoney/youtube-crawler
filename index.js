@@ -65,10 +65,10 @@ const main = async (channel) => {
     let videoCount = await channelDetail.collect(channel, time)
     pqueue.add(() => channelDetail.collect(channel, time)).then(function(videoCount){
       if(videoCount === '0' || videoCount === 0) throw new Error('Empty Channel')
-        pqueue.add(() => videoList.collect(channel, videoCount)).then(function({ dirName, videos }){
+        pqueue.add(() => videoList.collect(channel, videoCount)).then(function({ dirName, videos, channelId }){
           console.log(channel + ' videoList done')
           for(const videoId of videos){
-            pqueue.add(() => videoDetail.collect(dirName, videoId)).then(function(result){
+            pqueue.add(() => videoDetail.collect(dirName, videoId, channelId)).then(function(result){
               console.log(videoId + ' videoDetail done')
               pqueue.add(() => commentDetail.collect(dirName, videoId).then(console.log.bind(null, videoId + ' commentDetail done')))
             })
