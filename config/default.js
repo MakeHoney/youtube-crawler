@@ -46,4 +46,20 @@ module.exports = {
       json: true,
     },
   },
+  commentDetail: {
+    retryOpt: {
+      retries: 5,
+      minTimeout: 1000,
+      maxTimeout: 15000,
+    },
+    requestOpt: {
+      url: 'https://www.googleapis.com/youtube/v3/commentThreads',
+      qs: {
+        part: 'snippet',
+        videoId: '',
+        maxResults: 20,
+      },
+      json: true,
+    },
+  },
 }

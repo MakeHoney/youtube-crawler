@@ -7,6 +7,8 @@ const config = require('config'),
   videoList = new VideoList(config.videoList),
   VideoDetail = require('./lib/video-detail.js'),
   videoDetail = new VideoDetail(config.videoDetail),
+  CommentDetail = require('./lib/comment-detail.js'),
+  commentDetail = new CommentDetail(config.commentDetail),
   promisify = require('util').promisify,
   cluster = require('cluster'),
   Pqueue = require('p-queue'),
@@ -44,6 +46,14 @@ if(!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     file.write(JSON.stringify(result, null, '\t'))
     file.end()
   })
+
+  commentDetail.setWriter(async (result, dirName, videoId, time) => {
+    const fileName = `${dirName}/${videoId}-${time}-comment-detail.txt`
+    const file = fs.createWriteStream(fileName)
+
+    file.write(JSON.stringify(result, null, '\t'))
+    file.end()
+  })
 }
 
 /* fetch jobs on main */
@@ -57,8 +67,12 @@ const main = async (channel) => {
       if(videoCount === '0' || videoCount === 0) throw new Error('Empty Channel')
         pqueue.add(() => videoList.collect(channel, videoCount)).then(function({ dirName, videos }){
           console.log(channel + ' videoList done')
+          console.log(videos)
           for(const videoId of videos){
-            pqueue.add(() => videoDetail.collect(dirName, videoId)).then(console.log.bind(null, videoId + ' videoDetail done'))
+            pqueue.add(() => videoDetail.collect(dirName, videoId)).then(function(result){
+              console.log(videoId + ' videoDetail done')
+              pqueue.add(() => commentDetail.collect(dirName, videoId).then(console.log.bind(null, videoId + ' commentDetail done')))
+            })
           }
         })
     })
