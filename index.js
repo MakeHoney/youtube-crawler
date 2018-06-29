@@ -62,7 +62,8 @@ const main = async (channel) => {
   try {
     console.log('this is ' + channel)
     const time = (new Date()).toFormat('YYYY-MM-DDTHH24-MI-SS.000Z')
-    let videoCount = await channelDetail.collect(channel, time)
+    let videoCount = 1
+    //await channelDetail.collect(channel, time)
     pqueue.add(() => channelDetail.collect(channel, time)).then(function(videoCount){
       if(videoCount === '0' || videoCount === 0) throw new Error('Empty Channel')
         pqueue.add(() => videoList.collect(channel, videoCount)).then(function({ dirName, videos, channelId }){
