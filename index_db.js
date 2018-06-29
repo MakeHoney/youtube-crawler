@@ -84,9 +84,8 @@ if(!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
   commentDetail.setWriter(async (result, dirName, videoId, time) => {
     var commentText;
     result.forEach(function(element, index, array) {
-      commentText = element.commentText.replace(/['"]+/g, '');
-      commentText = element.commentText.replace("\n", '');
-      
+      commentText = element.commentText.replace(/['"\n]+/g, '');
+
       sql = "INSERT INTO comments VALUES('" +
             element.commentId + "','" +
             element.commentAuthorName + "','" +
