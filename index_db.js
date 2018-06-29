@@ -85,7 +85,8 @@ if(!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
     var commentText;
     result.forEach(function(element, index, array) {
       commentText = element.commentText.replace(/['"]+/g, '');
-
+      commentText = element.commentText.replace("\n", '');
+      
       sql = "INSERT INTO comments VALUES('" +
             element.commentId + "','" +
             element.commentAuthorName + "','" +
